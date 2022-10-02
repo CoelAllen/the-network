@@ -18,11 +18,7 @@
             Manage Account
           </div>
         </router-link>
-        <!-- <router-link :to="{ name: 'Profile' }">
-          <div class="list-group-item list-group-item-action hoverable">
-            Your Profile
-          </div>
-        </router-link> -->
+
         <div class="list-group-item list-group-item-action hoverable text-danger" @click="logout">
           <i class="mdi mdi-logout"></i>
           logout

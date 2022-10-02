@@ -11,21 +11,9 @@
     </router-link>
   </div>
 </template>
-      
-      
-     
-
-
-      
-      
-      
-      
-      
-      
-      
-
 
 <script>
+
 import { Account } from '../models/Account.js';
 
 export default {
@@ -50,3 +38,15 @@ export default {
 
 }
 </style>
+      
+      
+     
+
+
+      
+      
+      
+      
+      
+      
+      

@@ -7,13 +7,28 @@
     <div>
       <h3>{{profile.name}}</h3>
       <p>{{profile.class}}</p>
-      <div v-if="profile.graduated==true">
+      <div class="d-flex">
 
-        <i class="mdi mdi-school"></i>
+        <div v-if="profile.graduated==true">
+          <i class="mdi mdi-school p-1"></i>
+        </div>
+        <div v-if="profile.github">
+          <i class="mdi mdi-github p-1"></i>
+        </div>
+        <div v-if="profile.linkedin">
+          <i class="mdi mdi-linkedin p-1"></i>
+        </div>
+        <div v-if="profile.resume">
+          <i class="mdi mdi-format-float-left p-1"></i>
+        </div>
       </div>
-
-
     </div>
+
+
+
+
+
+
   </div>
 </template>
 

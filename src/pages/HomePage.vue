@@ -2,7 +2,10 @@
   <!-- TODO Make new post Function, must be logged in!! -->
   <div class="g-0 container-fluid d-flex">
     <section class="col-md-8 m-2">
-      <PostForm />
+      <div v-if="account.id">
+        <PostForm />
+      </div>
+
       <PostCard v-for="p in posts" :post="p" />
       <div class="d-flex justify-content-between">
 
@@ -41,13 +44,16 @@ import { adsService } from '../services/AdsService.js';
 import { Ad } from '../models/Ad.js';
 import AdCard1 from '../components/AdCard.vue';
 import PostForm from '../components/PostForm.vue';
+import { Account } from '../models/Account.js';
 
 export default {
   props: {
-    ad: { type: Ad, required: true }
+    ad: { type: Ad, required: true },
+
   },
   setup() {
     const route = useRoute();
+
 
     async function getAds() {
       try {
@@ -76,6 +82,8 @@ export default {
       ads: computed(() => AppState.ads),
       nextPage: computed(() => AppState.nextPage),
       previousPage: computed(() => AppState.previousPage),
+      account: computed(() => AppState.account),
+
 
       async changePage(pageUrl) {
         try {

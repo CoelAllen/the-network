@@ -35,6 +35,19 @@ class PostsService{
   async createPost(formData){
     const res = await SandboxApi.post('api/posts', formData)
     AppState.posts.push(new Post(res.data))
+    this.getPosts()
+  }
+  async removePost(id){
+    const res = await SandboxApi.delete(`api/posts/${id}`)
+    AppState.posts = AppState.posts.filter(p=>p.id != id)
+    this.getPosts()
+  }
+
+  async likePost(id){
+    const res = await SandboxApi.post(`api/posts/${id}/like`)
+    AppState.likes = res.data.likes
+    this.getPosts()
+    
   }
    
 }
