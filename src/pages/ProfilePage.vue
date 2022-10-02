@@ -9,22 +9,26 @@
         <img class="profile-picture" :src="profile.picture" alt="">
         <div class="card-body mt-5 d-flex justify-content-between">
           <h3>{{profile.name}}</h3>
-          <div>
-            <a v-if="profile.github" :href="profile.github" target="_blank">
-              <i class="mdi mdi-github" title="GitHub"></i>
-            </a>
-            <a v-if="profile.linkedin" :href="profile.linkedin" target="_blank">
-              <i class="mdi mdi-linkedin" title="LinkedIn"></i>
-            </a>
-            <a v-if="profile.resume" :href="profile.resume" target="_blank">
-              <i class="mdi mdi-paperclip" title="Resume"></i>
+          <div class="d-flex">
+
+            <h5 class="ps-3">{{profile.class}}</h5>
+            <a v-if="profile.graduated==true">
+              <i class="mdi mdi-school px-1" title="Graduate"></i>
             </a>
           </div>
-          <p>{{profile.bio}}</p>
+          <div>
+            <a v-if="profile.github" :href="profile.github" target="_blank">
+              <i class="mdi mdi-github px-1" title="GitHub"></i>
+            </a>
+            <a v-if="profile.linkedin" :href="profile.linkedin" target="_blank">
+              <i class="mdi mdi-linkedin px-1" title="LinkedIn"></i>
+            </a>
+            <a v-if="profile.resume" :href="profile.resume" target="_blank">
+              <i class="mdi mdi-paperclip px-1" title="Resume"></i>
+            </a>
+          </div>
         </div>
-        <div v-if="profile.id==account.id" class="card-footer d-flex justify-content-end">
-          <button class="btn btn-primary">EDIT</button>
-        </div>
+        <p>{{profile.bio}}</p>
       </div>
       <div v-if="profile.id == account.id">
 

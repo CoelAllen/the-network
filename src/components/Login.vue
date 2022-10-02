@@ -25,6 +25,10 @@
         </div>
       </div>
     </div>
+    <img class="mt-5" style="width: 25vh"
+      src="https://42f2671d685f51e10fc6-b9fcecea3e50b3b59bdc28dead054ebc.ssl.cf5.rackcdn.com/illustrations/Beach_day_cser.svg"
+      alt="">
+    <p class="m-5">Look! A Dog!</p>
   </span>
 </template>
 
