@@ -1,28 +1,28 @@
 <template>
-  <div class="card mt-2">
+  <div class="card mt-2 ms-.5">
 
-    <div class="post-form ">
-      <form @submit.prevent="handleSubmit">
-        <div class="d-flex px-3">
-          <div class="form-group w-100 mt-3">
-            <label for="post-body">Make Post:</label>
-            <textarea class="form-control" v-model="editable.body" id="post-body" rows="3"></textarea>
-          </div>
-        </div>
-        <div class="my-3 d-flex">
 
-          <div class="input-group px-2">
-            <div class="input-group-prepend ">
-              <span class="input-group-text" id="img-url">Image URL:</span>
-            </div>
-            <input type="url" class="form-control" v-model="editable.imgUrl" aria-label="Default"
-              aria-describedby="img-url">
-            <button type="submit" class="form-control btn btn-primary w-10">Post</button>
-          </div>
+    <form ref="postForm" @submit.prevent="handleSubmit">
+      <div class="d-flex px-3">
+        <div class="form-group w-100 mt-3">
+          <label for="post-body">Make Post:</label>
+          <textarea class="form-control" v-model="editable.body" id="post-body" rows="3"></textarea>
         </div>
-      </form>
-    </div>
+      </div>
+      <div class="my-3 d-flex">
+
+        <div class="input-group px-2">
+          <div class="input-group-prepend ">
+            <span class="input-group-text" id="img-url">Image URL:</span>
+          </div>
+          <input type="url" class="form-control" v-model="editable.imgUrl" aria-label="Default"
+            aria-describedby="img-url">
+        </div>
+        <button style="width:100px" type="submit" class="form-control btn btn-primary me-2">Post</button>
+      </div>
+    </form>
   </div>
+
 </template>
 
 
@@ -41,11 +41,11 @@ export default {
   setup() {
     const editable = ref({})
     return {
+
       profile: computed(() => AppState.activeProfile),
       editable,
       async handleSubmit() {
         try {
-          debugger
           await postsService.createPost(editable.value)
           // editable.value = {
           //   post: {}
@@ -53,6 +53,7 @@ export default {
         } catch (error) {
           Pop.error(error, '[submittingPostForm]')
         }
+
       }
     }
   }

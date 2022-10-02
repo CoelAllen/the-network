@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex">
+  <div class="d-flex position-sticky">
 
     <img class="ad-img mb-2" :src="ad.tall" alt="">
   </div>

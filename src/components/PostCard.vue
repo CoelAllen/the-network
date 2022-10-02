@@ -1,7 +1,7 @@
 <template>
   <div class="post-card m-2 col-12">
 
-    <div class="post-card card d-flex">
+    <div class="post-card card d-flex elevation-3">
       <div class="card-header">
         <ProfileDetail :profile="post.creator" />
       </div>
@@ -12,11 +12,11 @@
       <small class="ps-2">Created At:</small>
       <small class="px-3">{{new Date(post.createdAt)}}</small>
       <div class="card-footer d-flex justify-content-end">
-        <!-- TODO make like function -->
-        <i @click="likePost(post.id)" class="mdi mdi-heart-outline selectable"></i>{{post.likeIds.length}}
+        <i @click="likePost(post.id)" class="mdi mdi-heart-outline selectable"
+          title="Like Post"></i>{{post.likeIds.length}}
         <span>
           <div v-if="post.creatorId == account.id">
-            <i @click="removePost(post.id)" class="mdi mdi-delete selectable"></i>
+            <i @click="removePost(post.id)" class="mdi mdi-delete selectable p-2" title="Delete Post"></i>
           </div>
         </span>
       </div>
@@ -53,11 +53,14 @@ export default {
       account: computed(() => AppState.account),
 
       async likePost(id) {
+        // if (!this.account.id) {
+        //   Pop.
+        // }
         try {
           await postsService.likePost(id)
         } catch (error) {
           logger.error(error, "[likingPost]")
-          Pop.error(error)
+          Pop.error("You Are Not Logged In")
         }
       },
       async removePost(id) {
@@ -68,7 +71,7 @@ export default {
             await postsService.removePost(id)
           } catch (error) {
             logger.error(error, "[removingPost]")
-            Pop.error(error, "This isn't your post!")
+            Pop.error("This isn't your post!")
           }
       }
     };

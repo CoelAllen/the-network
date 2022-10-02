@@ -2,13 +2,14 @@
   <div class="d-flex align-items-center" v-if="profile">
     <router-link :to="{name:'Profile', params: {id: profile.id}}">
 
-      <img class="detail-img" :src="profile.picture" alt="">
+      <img class="detail-img" :src="profile.picture" alt="" title="Profile Page">
     </router-link>
     <div>
       <h3>{{profile.name}}</h3>
-      <p>{{profile.class}}</p>
+      <div v-if="profile.class">
+        <span>Class of {{profile.class}}</span>
+      </div>
       <div class="d-flex">
-
         <div v-if="profile.graduated==true">
           <i class="mdi mdi-school p-1"></i>
         </div>
@@ -29,6 +30,8 @@
 
 
 
+
+
   </div>
 </template>
 
@@ -42,7 +45,7 @@ import { Account } from '../models/Account.js';
 export default {
   props: {
     profile: {
-      type: Account,
+      type: Object,
       required: true
     }
   },

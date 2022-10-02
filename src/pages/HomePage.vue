@@ -1,6 +1,6 @@
 <template>
   <!-- TODO Make new post Function, must be logged in!! -->
-  <div class="g-0 container-fluid d-flex">
+  <div class="g-0 container-fluid d-flex w-100">
     <section class="col-md-8 m-2">
       <div v-if="account.id">
         <PostForm />
@@ -9,20 +9,23 @@
       <PostCard v-for="p in posts" :post="p" />
       <div class="d-flex justify-content-between">
 
-        <!-- TODO Split into two functions and maybe put a page counter on there -->
-        <span @click="changePage(previousPage)" :disabled="!previousPage" :class="{'disabled' : !previousPage}"
+        <span @click="newerPage(previousPage)" :disabled="!previousPage" :class="{'disabled d-none' : !previousPage}"
           class="d-flex align-items-center selectable">
           <i class="mdi mdi-chevron-double-left fs-2"></i>
           <h4 class="mb-0">Last Page</h4>
         </span>
-        <span @click="changePage(nextPage)" :disabled="!nextPage" :class="`bg-dark ${!nextPage ? 'bg-secondary' : ''}`"
+        <span @click="olderPage(nextPage)" :disabled="!nextPage" :class="{'disabled d-none' : !nextPage}"
           class="d-flex align-items-center selectable">
           <h4 class="mb-0">Next Page</h4>
           <i class="mdi mdi-chevron-double-right fs-2"></i>
         </span>
       </div>
     </section>
-    <div class="ms-3 mt-4">
+    <div class="ms-4 mt-3 ads">
+      <AdCard v-for="a in ads" :ad="a" />
+      <AdCard v-for="a in ads" :ad="a" />
+      <AdCard v-for="a in ads" :ad="a" />
+      <AdCard v-for="a in ads" :ad="a" />
       <AdCard v-for="a in ads" :ad="a" />
     </div>
 
@@ -48,7 +51,7 @@ import { Account } from '../models/Account.js';
 
 export default {
   props: {
-    ad: { type: Ad, required: true },
+    ad: { type: Object, required: true },
 
   },
   setup() {
@@ -80,19 +83,28 @@ export default {
     return {
       posts: computed(() => AppState.posts),
       ads: computed(() => AppState.ads),
-      nextPage: computed(() => AppState.nextPage),
-      previousPage: computed(() => AppState.previousPage),
+      nextPage: computed(() => AppState.olderPage),
+      previousPage: computed(() => AppState.newerPage),
       account: computed(() => AppState.account),
 
 
-      async changePage(pageUrl) {
+      async olderPage(pageUrl) {
         try {
-          await postsService.getPosts(pageUrl)
+          await postsService.olderPage(pageUrl)
+        } catch (error) {
+          logger.error(error, '[changePage]')
+          Pop.error(error.message)
+        }
+      },
+      async newerPage(pageUrl) {
+        try {
+          await postsService.newerPage(pageUrl)
         } catch (error) {
           logger.error(error, '[changePage]')
           Pop.error(error.message)
         }
       }
+
     }
   },
   components: { PostCard, ProfileDetail, AdCard, AdCard1, PostForm }
@@ -100,8 +112,5 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.sticky-ad {
-  width: 30px;
 
-}
 </style>

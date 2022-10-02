@@ -11,7 +11,7 @@
           <h3>{{profile.name}}</h3>
           <div class="d-flex">
 
-            <h5 class="ps-3">{{profile.class}}</h5>
+            <h5 class="ps-3">Class of {{profile.class}}</h5>
             <a v-if="profile.graduated==true">
               <i class="mdi mdi-school px-1" title="Graduate"></i>
             </a>
@@ -36,16 +36,15 @@
       </div>
       <PostCard v-for="p in posts" :post="p" :key="p.id" />
       <div class="d-flex justify-content-between">
-        <!-- <span @click="changePage(previousPage)" :disabled="!previousPage" :class="{'disabled' : !previousPage}"
-          class="d-flex align-items-center">
+        <span @click="newerPage(previousPage)" class="d-flex align-items-center selectable">
           <i class="mdi mdi-chevron-double-left fs-2"></i>
           <h4 class="mb-0">Last Page</h4>
         </span>
-        <span @click="changePage(nextPage)" :disabled="!nextPage"
-        :class="`bg-dark ${!nextPage ? 'bg-secondary' : ''}`" class="d-flex align-items-center">
-        <h4 class="mb-0">Next Page</h4>
-        <i class="mdi mdi-chevron-double-right fs-2"></i>
-      </span> -->
+        <span @click="olderPage(nextPage)" class="d-flex align-items-center selectable">
+          <h4 class="mb-0">Next Page</h4>
+          <i class="mdi mdi-chevron-double-right fs-2"></i>
+        </span>
+
       </div>
     </section>
 
@@ -121,7 +120,24 @@ export default {
       posts: computed(() => AppState.posts),
       coverImg: computed(() => `url(${AppState.activeProfile?.coverImg})`),
       account: computed(() => AppState.account),
-      ads: computed(() => AppState.ads)
+      ads: computed(() => AppState.ads),
+
+      async olderPage() {
+        try {
+          await postsService.olderPage()
+        } catch (error) {
+          logger.error(error, '[changePage]')
+          Pop.error(error.message)
+        }
+      },
+      async newerPage() {
+        try {
+          await postsService.newerPage()
+        } catch (error) {
+          logger.error(error, '[changePage]')
+          Pop.error(error.message)
+        }
+      }
     };
   },
   components: { PostCard, ProfilePageDetail, ProfilePageDetail1, PostForm, AdCard }
@@ -131,7 +147,7 @@ export default {
 
 <style lang="scss" scoped>
 .bio-banner {
-  height: 25vh;
+  height: 45vh;
   background-image: v-bind(coverImg);
   background-size: cover;
   background-position: center;
@@ -145,7 +161,7 @@ export default {
   border-radius: 50%;
   height: 16vh;
   position: absolute;
-  top: 120px;
+  top: 280px;
   left: 50px;
 }
 </style>

@@ -25,6 +25,9 @@
         </div>
       </div>
     </div>
+    <div>
+
+    </div>
     <img class="mt-5" style="width: 25vh"
       src="https://42f2671d685f51e10fc6-b9fcecea3e50b3b59bdc28dead054ebc.ssl.cf5.rackcdn.com/illustrations/Beach_day_cser.svg"
       alt="">
@@ -36,6 +39,7 @@
 import { computed } from 'vue'
 import { AppState } from '../AppState'
 import { AuthService } from '../services/AuthService'
+import ProfilePage from '../pages/ProfilePage.vue'
 export default {
   setup() {
     return {
@@ -43,13 +47,14 @@ export default {
       user: computed(() => AppState.user),
       account: computed(() => AppState.account),
       async login() {
-        AuthService.loginWithPopup()
+        AuthService.loginWithPopup();
       },
       async logout() {
-        AuthService.logout({ returnTo: window.location.origin })
+        AuthService.logout({ returnTo: window.location.origin });
       }
-    }
-  }
+    };
+  },
+  components: { ProfilePage }
 }
 </script>
 
