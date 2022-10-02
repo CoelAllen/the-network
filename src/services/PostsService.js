@@ -8,10 +8,9 @@ class PostsService{
     AppState.posts = []
     const res = await SandboxApi.get('api/posts')
     logger.log(res.data, '[getPostsFromService]')
-    AppState.posts = res.data.posts.map(p => new Post(p))
-  //  TODO Split into two functions, url is really hard
-    AppState.nextPage = res.data.older
-    AppState.previousPage = res.data.newer
+    AppState.posts = res.data.posts.map(p=> new Post(p))
+    AppState.newerPage = res.data.newer
+    AppState.olderPage = res.data.older
   }
   async getPostsBySearchTerm(term, page=1){
     const res = await SandboxApi.get('api/posts', {
@@ -31,6 +30,8 @@ class PostsService{
       }
     })
     AppState.posts = res.data.posts.map(p=> new Post(p))
+     AppState.newerPage = res.data.newer
+      AppState.olderPage = res.data.older
   } 
   async createPost(formData){
     const res = await SandboxApi.post('api/posts', formData)
@@ -40,7 +41,7 @@ class PostsService{
   async removePost(id){
     const res = await SandboxApi.delete(`api/posts/${id}`)
     AppState.posts = AppState.posts.filter(p=>p.id != id)
-    this.getPosts()
+    // this.getPosts()
   }
 
   async likePost(id){
@@ -49,6 +50,19 @@ class PostsService{
     this.getPosts()
     
   }
+  async olderPage(){
+    const res = await SandboxApi.get(AppState.olderPage)
+    AppState.posts = res.data.posts
+    AppState.newerPage = res.data.newer
+    AppState.olderPage = res.data.older
+  }
+  async newerPage(){
+    const res = await SandboxApi.get(AppState.newerPage)
+    AppState.posts = res.data.posts
+    AppState.newerPage = res.data.newer
+    AppState.olderPage = res.data.older
+  }
+  
    
 }
 
