@@ -36,15 +36,15 @@
       </div>
       <PostCard v-for="p in posts" :post="p" :key="p.id" />
       <div class="d-flex justify-content-between">
-        <span @click="newerPage(previousPage)" class="d-flex align-items-center selectable">
+        <span @click="newerPage()" class="d-flex align-items-center selectable" v-if="newerPage">
           <i class="mdi mdi-chevron-double-left fs-2"></i>
-          <h4 class="mb-0">Last Page</h4>
+          <h4 class="mb-0">Prev Page</h4>
         </span>
-        <span @click="olderPage(nextPage)" class="d-flex align-items-center selectable">
+
+        <span @click="olderPage()" class="d-flex align-items-center selectable" v-if="olderPage">
           <h4 class="mb-0">Next Page</h4>
           <i class="mdi mdi-chevron-double-right fs-2"></i>
         </span>
-
       </div>
     </section>
 
@@ -81,7 +81,7 @@ import { logger } from '../utils/Logger.js';
 
 export default {
   props: {
-    ad: { type: Ad, required: true }
+    ad: { type: Object, required: true }
   },
   setup() {
     const route = useRoute();
@@ -122,17 +122,17 @@ export default {
       account: computed(() => AppState.account),
       ads: computed(() => AppState.ads),
 
-      async olderPage() {
+      async olderPage(pageUrl) {
         try {
-          await postsService.olderPage()
+          await postsService.olderPage(pageUrl)
         } catch (error) {
           logger.error(error, '[changePage]')
           Pop.error(error.message)
         }
       },
-      async newerPage() {
+      async newerPage(pageUrl) {
         try {
-          await postsService.newerPage()
+          await postsService.newerPage(pageUrl)
         } catch (error) {
           logger.error(error, '[changePage]')
           Pop.error(error.message)
